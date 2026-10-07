@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: ai-data-analyst
+
+cohere:
+  api-key: ${COHERE_API_KEY}
+  model: command-a-plus-05-2026
