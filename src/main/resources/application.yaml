@@ -5,3 +5,12 @@ spring:
 cohere:
   api-key: ${COHERE_API_KEY}
   model: command-a-plus-05-2026
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
