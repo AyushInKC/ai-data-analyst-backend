@@ -19,21 +19,7 @@
 
 	<properties>
 		<java.version>21</java.version>
-		<spring-ai.version>2.0.1</spring-ai.version>
 	</properties>
-
-	<!-- Spring AI BOM -->
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.ai</groupId>
-				<artifactId>spring-ai-bom</artifactId>
-				<version>${spring-ai.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<dependencies>
 
@@ -43,22 +29,17 @@
 			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
 
-		<!-- Gemini / Spring AI -->
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-starter-model-google-genai</artifactId>
-		</dependency>
-
 		<!-- DuckDB -->
 		<dependency>
 			<groupId>org.duckdb</groupId>
 			<artifactId>duckdb_jdbc</artifactId>
 			<version>1.5.6.0</version>
 		</dependency>
+
+		<!-- Jackson -->
 		<dependency>
-			<groupId>com.cohere</groupId>
-			<artifactId>cohere-java</artifactId>
-			<version>1.10.2</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
 		<!-- Lombok -->
@@ -96,11 +77,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+
 				<executions>
 
 					<execution>
 						<id>default-compile</id>
 						<phase>compile</phase>
+
 						<goals>
 							<goal>compile</goal>
 						</goals>
@@ -113,11 +96,13 @@
 								</path>
 							</annotationProcessorPaths>
 						</configuration>
+
 					</execution>
 
 					<execution>
 						<id>default-testCompile</id>
 						<phase>test-compile</phase>
+
 						<goals>
 							<goal>testCompile</goal>
 						</goals>

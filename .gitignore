@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+# DuckDB runtime files
+data/*.duckdb
+data/*.duckdb.wal
+
+# Uploaded datasets
+data/uploads/
+
+# Environment / secrets
+.env
+
+# Build output
+
+# IDE
+.idea/

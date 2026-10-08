@@ -33,11 +33,15 @@ public class ChatService {
         System.out.println("2. Dataset found: " + tableName);
         System.out.println("3. Generating SQL...");
 
-        String sql =
-                aiService.generateSql(
-                        tableName,
-                        request.question()
-                );
+        List<String> columns = duckDbService.getColumns(tableName);
+        System.out.println(
+                "Columns: " + duckDbService.getColumns(tableName)
+        );
+        String sql = aiService.generateSql(
+                tableName,
+                columns,
+                request.question()
+        );
         System.out.println("4. SQL generated: " + sql);
         System.out.println("5. Executing SQL...");
 
