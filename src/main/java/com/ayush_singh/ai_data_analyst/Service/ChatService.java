@@ -12,15 +12,18 @@ public class ChatService {
     private final DataRegistry datasetRegistry;
     private final DuckDBService duckDbService;
     private final AiService aiService;
+    private final SqlValidatorService sqlValidatorService;
 
     public ChatService(
             DataRegistry datasetRegistry,
-            DuckDBService duckDbService,
-            AiService aiService
+            DuckDBService duckDBService,
+            AiService aiService,
+            SqlValidatorService sqlValidatorService
     ) {
         this.datasetRegistry = datasetRegistry;
-        this.duckDbService = duckDbService;
+        this.duckDbService = duckDBService;
         this.aiService = aiService;
+        this.sqlValidatorService = sqlValidatorService;
     }
 
     public ChatResponse chat(ChatRequest request) {
@@ -37,10 +40,16 @@ public class ChatService {
         System.out.println(
                 "Columns: " + duckDbService.getColumns(tableName)
         );
-        String sql = aiService.generateSql(
+        String generatedSql = aiService.generateSql(
                 tableName,
                 columns,
                 request.question()
+        );
+        System.out.println("Generated SQL before validation: [" + generatedSql + "]");
+
+        String sql = sqlValidatorService.validate(
+                generatedSql,
+                tableName
         );
         System.out.println("4. SQL generated: " + sql);
         System.out.println("5. Executing SQL...");
