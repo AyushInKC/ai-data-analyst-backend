@@ -1,5 +1,6 @@
-package com.ayush_singh.ai_data_analyst.Service;
+package com.ayush_singh.ai_data_analyst;
 
+import com.ayush_singh.ai_data_analyst.Service.SqlValidatorService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,17 +12,18 @@ public class SqlValidatorServiceTest {
     private final String table =
             "dataset_90c440247f8a4b05953afd8cfaa4f3c6";
 
+
     @Test
     public void shouldAllowSelectQuery() {
 
         String sql = """
-                SELECT SUM(revenue)
-                FROM dataset_90c440247f8a4b05953afd8cfaa4f3c6;
-                """;
+            SELECT SUM(revenue)
+            FROM dataset_90c440247f8a4b05953afd8cfaa4f3c6;
+            """;
 
         String result = validator.validate(sql, table);
 
-        assertEquals(sql, result);
+        assertEquals(sql.trim(), result);
     }
 
     @Test
@@ -114,7 +116,7 @@ public class SqlValidatorServiceTest {
     }
 
     @Test
-   public void shouldRejectAlter() {
+    public void shouldRejectAlter() {
 
         String sql = """
                 ALTER TABLE dataset_90c440247f8a4b05953afd8cfaa4f3c6

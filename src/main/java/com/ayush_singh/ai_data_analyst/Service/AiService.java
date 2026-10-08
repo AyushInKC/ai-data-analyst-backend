@@ -89,41 +89,50 @@ public class AiService {
     public String generateSql(
             String tableName,
             List<String> columns,
-            String question
+            String question,
+            String conversationContext
+
     ) {
 
         String schema = String.join(", ", columns);
 
         String prompt = """
-            You are a SQL generator for a data analysis application.
+        You are a SQL generator for a data analysis application.
 
-            You are given a DuckDB table.
+        You are given a DuckDB table.
 
-            Table name:
-            %s
+        Table name:
+        %s
 
-            Available columns:
-            %s
+        Available columns:
+        %s
 
-            User question:
-            %s
+        Previous conversation:
+        %s
 
-            Generate ONLY a single SQL query.
+        Current user question:
+        %s
 
-            Rules:
-            - Use DuckDB SQL.
-            - Only generate SELECT or WITH queries.
-            - Do not use INSERT, UPDATE, DELETE, DROP, ALTER or CREATE.
-            - Use only the provided table.
-            - Use only columns that actually exist in the provided schema.
-            - Never invent column names.
-            - If the question cannot be answered using the available columns, return:
-              SELECT 'INSUFFICIENT_DATA' AS error;
-            - Do not explain the SQL.
-            - Return only SQL.
-            """.formatted(
+        Generate ONLY a single SQL query.
+
+        Rules:
+        - Use DuckDB SQL.
+        - Only generate SELECT or WITH queries.
+        - Do not use INSERT, UPDATE, DELETE, DROP, ALTER or CREATE.
+        - Use only the provided table.
+        - Use only columns that actually exist in the provided schema.
+        - Never invent column names.
+        - Use previous conversation to understand references such as:
+          "it", "that region", "the previous one", "its quantity", etc.
+        - If the question cannot be answered using the available columns,
+          return:
+          SELECT 'INSUFFICIENT_DATA' AS error;
+        - Do not explain the SQL.
+        - Return only SQL.
+        """.formatted(
                 tableName,
                 schema,
+                conversationContext,
                 question
         );
 
