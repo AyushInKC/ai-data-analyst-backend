@@ -1,5 +1,6 @@
 package com.ayush_singh.ai_data_analyst.Service;
 
+import com.ayush_singh.ai_data_analyst.Model.ChartResponse;
 import com.ayush_singh.ai_data_analyst.Model.ChatRequest;
 import com.ayush_singh.ai_data_analyst.Model.ChatResponse;
 import org.springframework.stereotype.Service;
@@ -14,20 +15,21 @@ public class ChatService {
     private final AiService aiService;
     private final SqlValidatorService sqlValidatorService;
     private final ConversationService conversationService;
-
+   private final ChartService chartService;
     public ChatService(
             DataRegistry datasetRegistry,
             DuckDBService duckDBService,
             AiService aiService,
             SqlValidatorService sqlValidatorService,
-            ConversationService conversationService
+            ConversationService conversationService,
 
-    ) {
+            ChartService chartService) {
         this.datasetRegistry = datasetRegistry;
         this.duckDbService = duckDBService;
         this.aiService = aiService;
         this.sqlValidatorService = sqlValidatorService;
         this.conversationService = conversationService;
+        this.chartService = chartService;
     }
 
     public ChatResponse chat(ChatRequest request) {
@@ -67,6 +69,8 @@ public class ChatService {
 
         List<Map<String, Object>> result =
                 duckDbService.executeQuery(sql);
+        ChartResponse chart =
+                chartService.generateChart(result);
 
         System.out.println(
                 "6. SQL executed. Rows: " + result.size()
@@ -100,7 +104,9 @@ public class ChatService {
 
         return new ChatResponse(
                 answer,
-                sql
+                sql,
+                result,
+                chart
         );
     }
 

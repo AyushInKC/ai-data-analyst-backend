@@ -17,10 +17,11 @@ public class AiService {
     private final ObjectMapper objectMapper;
     private final String model;
 
+
     public AiService(
             @Value("${cohere.api-key}") String apiKey,
             @Value("${cohere.model}") String model
-    ) {
+            ) {
         this.objectMapper = new ObjectMapper();
         this.model = model;
 
