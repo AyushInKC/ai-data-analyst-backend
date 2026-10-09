@@ -1,0 +1,14 @@
+
+.git/
+.idea/
+.vscode/
+target/
+.env
+*.iml
+
+data/uploads/
+data/*.duckdb
+data/*.duckdb.wal
+
+frontend/node_modules/
+frontend/dist/

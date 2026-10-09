@@ -45,3 +45,7 @@ data/uploads/
 
 # IDE
 .idea/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
